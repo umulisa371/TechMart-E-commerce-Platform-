@@ -13,7 +13,7 @@ app.use(cors({
   credentials: true,
 }));
 
-app.options("*", cors());
+
 
 app.use(express.json());
 // Routes
@@ -34,7 +34,7 @@ const adminRoutes = require("./routes/admin");
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
-app.use("/api/orders", orderRoutes);
+app.use("/api/orders", ordersUserRoutes);
 app.use("/api/orders", trackOrderRoutes);
 app.use("/api/analytics", analyticsRoutes);
 app.use("/api/users", userRoutes);

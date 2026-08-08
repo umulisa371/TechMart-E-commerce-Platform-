@@ -1122,8 +1122,34 @@ function AuthPage({ onAuth, onClose }) {
 
   const set = (k,v) => setForm(p => ({ ...p, [k]: v }));
 
-  // ✅ PUT THIS FIRST
- turn (
+    const submit = () => {
+    onAuth({
+      name: form.name,
+      email: form.email,
+      password: form.password,
+      isLogin: mode === "login"
+    });
+  }
+  const inp = {
+  width: "100%",
+  background: "#111",
+  border: "1px solid #333",
+  borderRadius: 9,
+  padding: "11px 14px",
+  color: "#fff",
+  fontSize: 14,
+  outline: "none"
+};
+
+const lbl = {
+  display: "block",
+  fontSize: 11,
+  color: "#aaa",
+  marginBottom: 5,
+  textTransform: "uppercase",
+  letterSpacing: "0.06em"
+};
+ return (
     <>
       <div onClick={onClose} style={{ position:"fixed", inset:0, background:"rgba(0,0,0,0.8)", zIndex:300, backdropFilter:"blur(8px)" }} />
       <div style={{ position:"fixed", top:"50%", left:"50%", transform:"translate(-50%,-50%)", background:C.card, border:`1px solid ${C.border}`, borderRadius:22, padding:"36px 32px", zIndex:301, width:"min(440px,94vw)", boxShadow:"0 40px 100px rgba(0,0,0,0.8)" }}>

@@ -1,7 +1,7 @@
 // src/api.js — drop this into your React frontend src/ folder
 // Replace VITE_API_URL in your .env with your backend URL
 
-const BASE = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const BASE = import.meta.env.VITE_API_URL || "https://techmart-hngi.onrender.com/api";
 
 const headers = () => ({
   "Content-Type": "application/json",
