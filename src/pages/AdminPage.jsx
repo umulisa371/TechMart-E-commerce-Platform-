@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import AddProduct from "./add_product";
 export default function AdminPage({ C, F }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -100,19 +100,58 @@ useEffect(() => {
     localStorage.removeItem("adminToken");
     setToken(null);
     setLoggedIn(false);
-  
+
     setData(null);
   };
 
 
 
 const deleteProduct = async (id) => {
-  await fetch(`https://techmart-hngi.onrender.com/api/admin/products/${id}`, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("adminToken")}`
-    },
-  });
+  const confirmed = window.confirm(
+    "Are you sure you want to delete this product?"
+  );
+
+  if (!confirmed) return;
+
+  try {
+    const res = await fetch(
+      `https://techmart-hngi.onrender.com/api/admin/products/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+        },
+      }
+    );
+
+    const result = await res.json();
+
+    if (!res.ok) {
+      alert(result.error || result.message || "Failed to delete product");
+      return;
+    }
+
+    // Remove immediately from Admin Dashboard
+    setData((prev) => {
+      if (!prev) return prev;
+
+      return {
+        ...prev,
+        products: prev.products.filter((product) => product.id !== id),
+        analytics: {
+          ...prev.analytics,
+          products: Math.max(0, prev.analytics.products - 1),
+        },
+      };
+    });
+
+    // Reload from backend to make sure UI is synchronized
+    await loadDashboard();
+  } catch (err) {
+    console.error("Delete product error:", err);
+    alert("Failed to delete product");
+  }
+
 
   loadDashboard();
 };
@@ -208,16 +247,12 @@ const updateOrder = async (id, status) => {
     alert("Failed to update order");
   }
 };
-const editProduct = async (p) => {
-  const name = prompt("Name", p.name);
-  const price = prompt("Price", p.price);
-  const stock = prompt("Stock", p.stock);
-
-  if (!name) return;
+const updateProduct = async () => {
+  if (!editingProduct) return;
 
   try {
     const res = await fetch(
-      `https://techmart-hngi.onrender.com/api/admin/products/${p.id}`,
+      `https://techmart-hngi.onrender.com/api/admin/products/${editingProduct.id}`,
       {
         method: "PUT",
         headers: {
@@ -225,9 +260,22 @@ const editProduct = async (p) => {
           Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
         },
         body: JSON.stringify({
-          name,
-          price: Number(price),
-          stock: Number(stock),
+          name: editingProduct.name,
+          brand: editingProduct.brand,
+          description: editingProduct.description,
+          price: Number(editingProduct.price),
+          origPrice: Number(editingProduct.origPrice),
+          stock: Number(editingProduct.stock),
+          image: editingProduct.image,
+          badge: editingProduct.badge,
+          rating: Number(editingProduct.rating || 0),
+          reviewCount: Number(editingProduct.reviewCount || 0),
+          type: editingProduct.type,
+          subcat: editingProduct.subcat,
+          duration: editingProduct.duration,
+          delivery: editingProduct.delivery,
+          teamSize: editingProduct.teamSize,
+          tagline: editingProduct.tagline,
         }),
       }
     );
@@ -239,14 +287,25 @@ const editProduct = async (p) => {
       return;
     }
 
-    loadDashboard(); // refresh UI
+    alert("Product updated successfully!");
+
+    setEditingProduct(null);
+
+    await loadDashboard();
   } catch (err) {
-    console.log(err);
-    alert("Update failed");
+    console.error("Update product error:", err);
+    alert("Failed to update product");
   }
 };
 
-
+if (page === "add-product") {
+  return (
+    <AddProduct
+      onBack={() => setPage("admin")}
+      onSaved={() => loadDashboard()}
+    />
+  );
+}
   return (
     <div style={{ padding: "32px 0" }}>
 
@@ -324,7 +383,7 @@ const editProduct = async (p) => {
 
       {/* Products */}
       <div style={{ marginBottom: 12 }}>
-  
+
 <button
   onClick={() => setPage("add-product")}
   style={{
@@ -339,7 +398,7 @@ const editProduct = async (p) => {
   + Add Product
 </button>
 
-  
+
 </div>
       <h2 style={{ color: C.text, fontFamily: F.display, fontSize: 18, marginBottom: 14 }}>🛍️ Products</h2>
       <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, overflow: "hidden", marginBottom: 32 }}>
@@ -350,7 +409,7 @@ const editProduct = async (p) => {
     <th>Price</th>
     <th>Stock</th>
     <th>Added</th>
-    
+
     <th>Description</th>
     <th>Actions</th>
   </tr>
@@ -369,9 +428,9 @@ const editProduct = async (p) => {
     View
   </button>
 
-  <button onClick={() => editProduct(p)}>
-    Edit
-  </button>
+ <button onClick={() => setEditingProduct({ ...p })}>
+  Edit
+</button>
 
   <button onClick={() => deleteProduct(p.id)}>
     Delete
@@ -380,7 +439,7 @@ const editProduct = async (p) => {
 </td>
               </tr>
 
-              
+
             ))}
           </tbody>
         </table>
@@ -401,6 +460,225 @@ const editProduct = async (p) => {
 )}
       </div>
 
+
+     {editingProduct && (
+  <div
+    style={{
+      marginTop: 24,
+      padding: 24,
+      background: C.surface,
+      border: `1px solid ${C.border}`,
+      borderRadius: 16,
+    }}
+  >
+    <h2
+      style={{
+        color: C.text,
+        fontFamily: F.display,
+        marginBottom: 20,
+      }}
+    >
+      ✏️ Edit Product
+    </h2>
+
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+        gap: 16,
+      }}
+    >
+
+      {/* Name */}
+      <div>
+        <label>Name</label>
+        <input
+          value={editingProduct.name || ""}
+          onChange={(e) =>
+            setEditingProduct({
+              ...editingProduct,
+              name: e.target.value,
+            })
+          }
+        />
+      </div>
+
+      {/* Brand */}
+      <div>
+        <label>Brand</label>
+        <input
+          value={editingProduct.brand || ""}
+          onChange={(e) =>
+            setEditingProduct({
+              ...editingProduct,
+              brand: e.target.value,
+            })
+          }
+        />
+      </div>
+
+      {/* Price */}
+      <div>
+        <label>Price</label>
+        <input
+          type="number"
+          value={editingProduct.price || ""}
+          onChange={(e) =>
+            setEditingProduct({
+              ...editingProduct,
+              price: e.target.value,
+            })
+          }
+        />
+      </div>
+
+      {/* Original Price */}
+      <div>
+        <label>Original Price</label>
+        <input
+          type="number"
+          value={editingProduct.origPrice || ""}
+          onChange={(e) =>
+            setEditingProduct({
+              ...editingProduct,
+              origPrice: e.target.value,
+            })
+          }
+        />
+      </div>
+
+      {/* Stock */}
+      <div>
+        <label>Stock</label>
+        <input
+          type="number"
+          value={editingProduct.stock || ""}
+          onChange={(e) =>
+            setEditingProduct({
+              ...editingProduct,
+              stock: e.target.value,
+            })
+          }
+        />
+      </div>
+
+      {/* Badge */}
+      <div>
+        <label>Badge</label>
+        <input
+          value={editingProduct.badge || ""}
+          onChange={(e) =>
+            setEditingProduct({
+              ...editingProduct,
+              badge: e.target.value,
+            })
+          }
+        />
+      </div>
+
+      {/* Type */}
+      <div>
+        <label>Type</label>
+        <select
+          value={editingProduct.type || ""}
+          onChange={(e) =>
+            setEditingProduct({
+              ...editingProduct,
+              type: e.target.value,
+            })
+          }
+        >
+          <option value="electronics">Electronics</option>
+          <option value="service">Service</option>
+        </select>
+      </div>
+
+      {/* Subcategory */}
+      <div>
+        <label>Subcategory</label>
+        <input
+          value={editingProduct.subcat || ""}
+          onChange={(e) =>
+            setEditingProduct({
+              ...editingProduct,
+              subcat: e.target.value,
+            })
+          }
+        />
+      </div>
+
+      {/* Image */}
+      <div style={{ gridColumn: "1 / -1" }}>
+        <label>Image URL</label>
+        <input
+          value={editingProduct.image || ""}
+          onChange={(e) =>
+            setEditingProduct({
+              ...editingProduct,
+              image: e.target.value,
+            })
+          }
+          style={{ width: "100%" }}
+        />
+      </div>
+
+      {/* Description */}
+      <div style={{ gridColumn: "1 / -1" }}>
+        <label>Description</label>
+
+        <textarea
+          value={editingProduct.description || ""}
+          onChange={(e) =>
+            setEditingProduct({
+              ...editingProduct,
+              description: e.target.value,
+            })
+          }
+          rows={4}
+          style={{ width: "100%" }}
+        />
+      </div>
+
     </div>
-  );
+
+    {/* Buttons */}
+    <div
+      style={{
+        display: "flex",
+        gap: 12,
+        marginTop: 20,
+      }}
+    >
+      <button
+        onClick={updateProduct}
+        style={{
+          background: C.accent,
+          color: "#fff",
+          border: "none",
+          borderRadius: 8,
+          padding: "10px 20px",
+          cursor: "pointer",
+        }}
+      >
+        💾 Save Changes
+      </button>
+
+      <button
+        onClick={() => setEditingProduct(null)}
+        style={{
+          background: "transparent",
+          color: C.red,
+          border: `1px solid ${C.red}`,
+          borderRadius: 8,
+          padding: "10px 20px",
+          cursor: "pointer",
+        }}
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+)}
+ </div>
+  )
 }

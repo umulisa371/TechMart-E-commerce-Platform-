@@ -1,12 +1,17 @@
 const BASE = import.meta.env.VITE_API_URL || "https://techmart-hngi.onrender.com/api";
 
-const getHeaders = () => ({
-  "Content-Type": "application/json",
-  ...(localStorage.getItem("token")
-    ? { Authorization: `Bearer ${localStorage.getItem("token")}` }
-    : {}),
-});
+const getHeaders = () => {
+  const token =
+    localStorage.getItem("adminToken") ||
+    localStorage.getItem("token");
 
+  return {
+    "Content-Type": "application/json",
+    ...(token
+      ? { Authorization: `Bearer ${token}` }
+      : {}),
+  };
+};
 const request = async (method, path, body) => {
   const res = await fetch(`${BASE}${path}`, {
     method,
@@ -17,7 +22,8 @@ const request = async (method, path, body) => {
   if (!res.ok) throw new Error(data.error || "Request failed");
   return data;
 };
-
+export const add_Product = (product) =>
+  request("POST", "/admin/products", product);
 // ── Auth ──────────────────────────────────────────────────────
 export const register = (name, email, password) =>
   request("POST", "/auth/register", { name, email, password });
@@ -30,6 +36,16 @@ export const getProducts = (params = {}) => {
   const qs = new URLSearchParams(params).toString();
   return request("GET", `/products?${qs}`);
 };
+// ── Admin Products ───────────────────────────────────────────
+
+export const addProduct = (product) =>
+  request("POST", "/admin/products", product);
+
+export const updateProduct = (id, product) =>
+  request("PUT", `/admin/products/${id}`, product);
+
+export const deleteProduct = (id) =>
+  request("DELETE", `/admin/products/${id}`);
 
 export const getProduct = (id) => request("GET", `/products/${id}`);
 

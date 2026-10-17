@@ -36,8 +36,11 @@ router.post("/register", async (req, res) => {
     });
 
   } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+  console.error("Registration error:", err);
+  res.status(500).json({
+    error: "Internal server error",
+  });
+}
 });
 router.post("/login", async (req, res) => {
   try {

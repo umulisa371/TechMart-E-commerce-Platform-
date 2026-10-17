@@ -1,26 +1,30 @@
-const jwt = require("jsonwebtoken");
+const prisma = require("../prismaClient");
 
-module.exports = (req, res, next) => {
+module.exports = async (req, res, next) => {
   try {
-    console.log("AUTH HEADER:", req.headers.authorization);
+    const user = await prisma.user.findUnique({
+      where: { id: req.user.id },
+      select: { role: true },
+    });
 
-    const token = req.headers.authorization?.split(" ")[1];
-
-    console.log("TOKEN:", token);
-
-    if (!token) {
-      return res.status(401).json({ message: "No token" });
+    if (!user) {
+      return res.status(401).json({
+        error: "User not found",
+      });
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-    console.log("DECODED:", decoded);
-
-    req.user = decoded;
+    if (user.role !== "admin") {
+      return res.status(403).json({
+        error: "Admin access required",
+      });
+    }
 
     next();
   } catch (err) {
-    console.log("JWT ERROR:", err.message);
-    return res.status(401).json({ message: err.message });
+    console.error("Admin authorization error:", err);
+
+    return res.status(500).json({
+      error: "Authorization failed",
+    });
   }
 };

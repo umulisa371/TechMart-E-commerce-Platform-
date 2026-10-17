@@ -658,7 +658,7 @@ function CartDrawer({ open, cart, onClose, onRemove, onQty, onClearCart }) {
   }
 };
 
-   
+
 const handleOrder = async () => {
   if (!payOk) return;
 
@@ -1119,6 +1119,7 @@ function AuthPage({ onAuth, onClose }) {
   const [mode, setMode] = useState("login");
   const [form, setForm] = useState({ name:"", email:"", password:"", confirm:"" });
   const [err, setErr] = useState("");
+
 
   const set = (k,v) => setForm(p => ({ ...p, [k]: v }));
 
@@ -2267,7 +2268,7 @@ export default function App() {
   const [user, setUser] = useState(null);
   const [authOpen, setAuthOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
- 
+
 
 useEffect(() => {
   getProducts({ limit: 50 })
@@ -2278,7 +2279,7 @@ useEffect(() => {
     })
     .catch(err => console.log("Using local products:", err.message));
 }, []);
-  
+
   const showToast = (msg, type="success") => { setToast({msg,type}); setTimeout(() => setToast(null), 2800); };
 
   const addToCart = p => {
@@ -2307,7 +2308,7 @@ useEffect(() => {
       result = await register(name, email, password);
     }
     localStorage.setItem("token", result.token);
-    localStorage.setItem("user", JSON.stringify(result.user)); 
+    localStorage.setItem("user", JSON.stringify(result.user));
     setUser(result.user);
     setAuthOpen(false);
     showToast(`Welcome, ${result.user.name}! 🎉`);
@@ -2335,7 +2336,7 @@ useEffect(() => {
 
   return (
 
-    
+
     <div style={{ background:C.bg, minHeight:"100vh", fontFamily:F.body, color:C.text }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap');
