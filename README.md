@@ -1,186 +1,146 @@
-# 🛒 TechMart – E-Commerce Platform
+# 🛒 TechMart — Full-Stack E-Commerce Platform
 
-TechMart is a full-stack **online shopping platform** designed to provide a simple and convenient way for users to browse products, manage their shopping cart, place orders, and track purchases.
+TechMart is a full-stack e-commerce web application that allows users to browse products, manage their shopping carts, place orders, and track purchases. It includes an administrative dashboard for managing store operations.
 
-The project demonstrates practical experience in **frontend development, backend API development, database integration, authentication, payment processing, and deployment**.
+This project demonstrates practical experience building responsive user interfaces, integrating REST APIs, implementing authentication, working with databases, and deploying a full-stack web application.
 
-## 🚀 Features
+## 🌐 Live Demo
 
-### 👤 User Features
+- **Live Website:** https://techmart-sable.vercel.app
+- **Backend API:** https://techmart-hngi.onrender.com
+- **Source Code:** https://github.com/umulisa371/Techmart
 
-* User registration and login
-* Secure user authentication
-* Browse products and categories
-* View product details
-* Add and remove products from cart
-* Manage cart items and quantities
-* Checkout and place orders
-* Payment processing
-* Track orders
+## ✨ Features
 
-### 🔐 Admin Features
+### Customer Features
+- User registration and login
+- Authentication and protected access
+- Browse products and product categories
+- View product details
+- Add, remove, and update cart items
+- Checkout and place orders
+- Payment functionality
+- Track orders and purchases
 
-* Admin authentication
-* Admin dashboard
-* Manage products
-* Manage orders
-* Manage users
-* View store statistics and information
+### Admin Features
+- Admin authentication
+- Dashboard for managing store operations
+- Create and manage products
+- Manage customer orders
+- Manage users
+- View store statistics
 
-## 🛠️ Technologies Used
+## 🛠️ Tech Stack
 
-**Frontend**
+| Area | Technologies |
+|---|---|
+| Frontend | React.js, JavaScript, HTML5, CSS3 |
+| Backend | Node.js, Express.js |
+| API | REST APIs |
+| Database | MongoDB |
+| Testing & Development | Postman, Git, GitHub |
+| Deployment | Vercel, Render |
 
-* React.js
-* HTML5
-* CSS3
-* JavaScript
+## 🏗️ Architecture
 
-**Backend**
-
-* Node.js
-* Express.js
-* REST API
-
-**Database**
-
-* MongoDB
-
-**Tools & Deployment**
-
-* Git & GitHub
-* Postman
-* Vercel
-* Render
-
-## 🏗️ System Architecture
+TechMart uses a client-server architecture. The React frontend communicates with the Express backend through REST API endpoints, while MongoDB stores application data.
 
 ```text
-┌─────────────────────┐
-│     React Frontend  │
-│                     │
-│ Products • Cart     │
-│ Checkout • Orders   │
-│ Admin Dashboard     │
-└──────────┬──────────┘
-           │
-           │ REST API
-           ▼
-┌─────────────────────┐
-│   Node.js + Express │
-│                     │
-│ Authentication      │
-│ Products • Orders    │
-│ Payments • Admin     │
-└──────────┬──────────┘
-           │
-           ▼
-┌─────────────────────┐
-│       MongoDB       │
-│                     │
-│ Users • Products    │
-│ Orders • Cart Data  │
-└─────────────────────┘
+┌──────────────────────────┐
+│      React Frontend      │
+│                          │
+│ Products • Cart          │
+│ Authentication • Orders  │
+│ Admin Dashboard          │
+└────────────┬─────────────┘
+             │
+             │ REST API
+             ▼
+┌──────────────────────────┐
+│    Node.js + Express     │
+│                          │
+│ Authentication           │
+│ Products • Orders        │
+│ Admin Operations         │
+└────────────┬─────────────┘
+             │
+             ▼
+┌──────────────────────────┐
+│         MongoDB          │
+│                          │
+│ Users • Products         │
+│ Orders • Related Data    │
+└──────────────────────────┘
 ```
 
-## 📂 Main Modules
+## 💻 What I Practiced
 
-* **Authentication** – User registration, login, and protected access
-* **Products** – Product listing, categories, and product details
-* **Shopping Cart** – Add, remove, and manage products
-* **Checkout** – Order creation and payment processing
-* **Order Tracking** – Users can monitor their orders
-* **Admin Dashboard** – Manage products, users, and orders
+Through this project, I gained practical experience with:
 
-## ⚙️ Getting Started
+- Building user interfaces and reusable React components.
+- Connecting frontend components to backend REST APIs.
+- Handling authentication and protected routes.
+- Managing shopping cart and order workflows.
+- Integrating frontend and backend functionality.
+- Working with MongoDB for persistent data storage.
+- Building administrative interfaces.
+- Deploying a frontend and backend application.
+
+## 🚀 Run Locally
+
+### Prerequisites
+
+- Node.js and npm
+- Access to a MongoDB database
+- Git
 
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/umulisa371/TechMart.git
-cd TechMart
+git clone https://github.com/umulisa371/Techmart.git
+cd Techmart
 ```
 
-### 2. Install dependencies
+### 2. Install frontend dependencies
 
-For the frontend:
+From the project root:
 
 ```bash
-cd frontend
 npm install
 ```
 
-For the backend:
+### 3. Install backend dependencies
 
 ```bash
-cd backend
+cd techmart-backend
 npm install
 ```
 
-### 3. Configure environment variables
+### 4. Configure environment variables
 
-Create a `.env` file in the backend directory and add the required configuration, such as:
+Create the required `.env` file or files based on the application's configuration. Set the appropriate database connection string, authentication secret, API settings, and any other required variables.
 
-```env
-PORT=5000
-MONGODB_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret
-```
+**Security:** Never commit `.env` files, passwords, database credentials, or API secrets to GitHub.
 
-Add any additional variables required by the payment service or email service.
+### 5. Start the application
 
-### 4. Run the application
+Check the `scripts` section of each `package.json` and use the development command configured for that part of the application. Run the frontend and backend in separate terminals if they require separate processes.
 
-Start the backend:
+## 🔮 Potential Improvements
 
-```bash
-npm run dev
-```
-
-Start the frontend:
-
-```bash
-npm run dev
-```
-
-The application will then be available through the local development URLs shown by Vite and Express.
-
-## 🌐 Live Demo
-
-**Frontend:** https://techmart-sable.vercel.app
-
-**Backend API:** https://techmart-hngi.onrender.com
-
-## 🎯 Project Goals
-
-TechMart was developed to:
-
-* Build a real-world full-stack e-commerce application
-* Practice developing RESTful APIs
-* Implement authentication and authorization
-* Work with a NoSQL database
-* Integrate payment functionality
-* Build an administrative management system
-* Gain experience deploying a full-stack application
-
-## 🔮 Future Improvements
-
-* Product reviews and ratings
-* Wishlist functionality
-* Advanced product search and filtering
-* Improved payment options
-* Email notifications for order updates
-* Sales and revenue analytics
-* Improved mobile experience
+- Product reviews and ratings
+- Wishlist functionality
+- Advanced product search and filtering
+- Additional payment options
+- Email notifications for order updates
+- More detailed sales analytics
+- Further improvements to mobile usability
 
 ## 👩‍💻 Author
 
 **Diane Umulisa**
 
-Software Engineering Student | Full-Stack Developer
+Frontend Developer | React.js | JavaScript | API Integration
 
-GitHub: [@umulisa371](https://github.com/umulisa371)
+- **GitHub:** https://github.com/umulisa371
 
----
-
-⭐ If you find this project useful, consider giving the repository a star!
