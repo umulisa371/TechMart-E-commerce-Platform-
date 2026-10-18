@@ -10,6 +10,26 @@ This project demonstrates practical experience building responsive user interfac
 - **Backend API:** https://techmart-hngi.onrender.com
 - **Source Code:** https://github.com/umulisa371/Techmart
 
+## 📸 Screenshots
+
+### 🏠 Homepage
+
+Explore the TechMart storefront and browse available products.
+
+![TechMart Homepage](screenshots/homepage.png)
+
+### 🛒 Shopping Cart
+
+Review selected products before checkout.
+
+![TechMart Shopping Cart](screenshots/cart.png)
+
+### 🔐 Admin Dashboard
+
+View the dashboard used to manage store operations.
+
+![TechMart Admin Dashboard](screenshots/admin-dashboard.png)
+
 ## ✨ Features
 
 ### Customer Features
