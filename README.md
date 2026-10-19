@@ -146,21 +146,12 @@ Create the required `.env` file or files based on the application's configuratio
 
 Check the `scripts` section of each `package.json` and use the development command configured for that part of the application. Run the frontend and backend in separate terminals if they require separate processes.
 
-##  Potential Improvements
-
-- Product reviews and ratings
-- Wishlist functionality
-- Advanced product search and filtering
-- Additional payment options
-- Email notifications for order updates
-- More detailed sales analytics
-- Further improvements to mobile usability
 
 ##  Author
 
 **Diane Umulisa**
 
-Frontend Developer | React.js | JavaScript | API Integration
+Frontend Developer | React.js | Next.js | JavaScript | API Integration
 
 - **GitHub:** https://github.com/umulisa371
 
