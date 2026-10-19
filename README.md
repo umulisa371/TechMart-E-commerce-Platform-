@@ -1,36 +1,36 @@
-# 🛒 TechMart — Full-Stack E-Commerce Platform
+#  TechMart — Full-Stack E-Commerce Platform
 
 TechMart is a full-stack e-commerce web application that allows users to browse products, manage their shopping carts, place orders, and track purchases. It includes an administrative dashboard for managing store operations.
 
 This project demonstrates practical experience building responsive user interfaces, integrating REST APIs, implementing authentication, working with databases, and deploying a full-stack web application.
 
-## 🌐 Live Demo
+##  Live Demo
 
 - **Live Website:** https://techmart-sable.vercel.app
 - **Backend API:** https://techmart-hngi.onrender.com
 - **Source Code:** https://github.com/umulisa371/Techmart
 
-## 📸 Screenshots
+##  Screenshots
 
-### 🏠 Homepage
+###  Homepage
 
 Explore the TechMart storefront and browse available products.
 
 ![TechMart Homepage](screenshots/homepage.png)
 
-### 🛒 Shopping Cart
+###  Shopping Cart
 
 Review selected products before checkout.
 
 ![TechMart Shopping Cart](screenshots/cart.png)
 
-### 🔐 Admin Dashboard
+###  Admin Dashboard
 
 View the dashboard used to manage store operations.
 
 ![TechMart Admin Dashboard](screenshots/admin-dashboard.png)
 
-## ✨ Features
+##  Features
 
 ### Customer Features
 - User registration and login
@@ -50,7 +50,7 @@ View the dashboard used to manage store operations.
 - Manage users
 - View store statistics
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 | Area | Technologies |
 |---|---|
@@ -61,7 +61,7 @@ View the dashboard used to manage store operations.
 | Testing & Development | Postman, Git, GitHub |
 | Deployment | Vercel, Render |
 
-## 🏗️ Architecture
+##  Architecture
 
 TechMart uses a client-server architecture. The React frontend communicates with the Express backend through REST API endpoints, while MongoDB stores application data.
 
@@ -93,7 +93,7 @@ TechMart uses a client-server architecture. The React frontend communicates with
 └──────────────────────────┘
 ```
 
-## 💻 What I Practiced
+##  What I Practiced
 
 Through this project, I gained practical experience with:
 
@@ -106,7 +106,7 @@ Through this project, I gained practical experience with:
 - Building administrative interfaces.
 - Deploying a frontend and backend application.
 
-## 🚀 Run Locally
+##  Run Locally
 
 ### Prerequisites
 
